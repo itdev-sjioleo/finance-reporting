@@ -7,8 +7,7 @@ use App\Models\PalmTickets;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Services\DataTable;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ReceiptionExport;
-use App\Exports\ReceiptionNtExport;
+use App\Exports\MainExport;
 
 class MainController extends Controller
 {
@@ -23,6 +22,14 @@ class MainController extends Controller
 
         $query = DB::connection('sqlsrv')->table('dbo.VIEW_CUSTOM_FINANCE_REPORT_1')
             ->where('POApprovedBy', '=', 'handara.utomo');
+        
+        if ($filters['po_date_start']) {
+            $query->where('POCreateDate', '>=', $filters['po_date_start']);
+        }
+
+        if ($filters['po_date_end']) {
+            $query->where('POCreateDate', '<=', $filters['po_date_end']);
+        }
 
         $datatable = datatables($query);
 
@@ -31,6 +38,6 @@ class MainController extends Controller
 
     public function export(Request $request)
     {
-        return (new ReceiptionExport())->download('Finance Tracking.xlsx');
+        return (new MainExport())->download('Finance Tracking.xlsx');
     }
 }

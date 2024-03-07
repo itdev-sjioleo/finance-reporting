@@ -5,86 +5,42 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="d-flex flex-row align-items-end" style="gap: 2rem">
+                <div>
+                    <p class="font-weight-bold">Tanggal PO</p>
+                    <div class="d-inline-flex align-items-center" style="gap: 1rem">
+                        <div>
+                            Dari
+                        </div>
+                        <div>
+                            <input id="filter-po-date-start" type="date" class="form-control">
+                        </div>
+                        <div>
+                            Ke
+                        </div>
+                        <div>
+                            <input id="filter-po-date-end" type="date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button id="btn-filter" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+            <hr>
             <table id="table-main" class="table table-striped table-bordered text-nowrap">
                 <thead>
                     <tr>
                         <td>Status</td>
-                        <td>PO Number</td>
-                        <td>PO Created Date</td>
-                        <td>PO Created By</td>
-                        <td>PO Approved Date</td>
-                        <td>PO Approved By</td>
-                        <td>PO Supplier Code</td>
-                        <td>PO Supplier Name</td>
-                        <td>Sup Bank</td>
-                        <td>Sup Account No</td>
-                        <td>Sup Account Name</td>
-                        <td>GR Number</td>
-                        <td>GR Create Date</td>
-                        <td>GR Created By</td>
-                        <td>GR Reference No</td>
-                        <td>IR Receipt No</td>
-                        <td>IR Create Date</td>
-                        <td>IR Created By</td>
-                        <td>IR Payment Date</td>
-                        <td>IR Net Amount</td>
-                        <td>PVR Number</td>
-                        <td>PVR Create Date</td>
-                        <td>PVR Created By</td>
-                        <td>PVR Amount Paid</td>
-                        <td>PVR Deducted PPh</td>
-                        <td>PVR Net Amount Paid</td>
-                        <td>PVR Approved Date</td>
-                        <td>PVR Approved By</td>
-                        <td>PVR Remarks</td>
-                        <td>PV Number</td>
-                        <td>PV Create Date</td>
-                        <td>PV Created By</td>
-                        <td>PV Amount Paid</td>
-                        <td>PV Bank Name</td>
-                        <td>PV Remarks</td>
+                        <td>Purchase Order</td>
+                        <td>Supplier Bank</td>
+                        <td>Purchase Invoice</td>
+                        <td>Invoice Receipt</td>
+                        <td>Payment Voucher Request</td>
+                        <td>Payment Voucher</td>
                     </tr>
                 </thead>
                 <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <td>Status</td>
-                        <td>PO Number</td>
-                        <td>PO Created Date</td>
-                        <td>PO Created By</td>
-                        <td>PO Approved Date</td>
-                        <td>PO Approved By</td>
-                        <td>PO Supplier Code</td>
-                        <td>PO Supplier Name</td>
-                        <td>Sup Bank</td>
-                        <td>Sup Account No</td>
-                        <td>Sup Account Name</td>
-                        <td>GR Number</td>
-                        <td>GR Create Date</td>
-                        <td>GR Created By</td>
-                        <td>GR Reference No</td>
-                        <td>IR Receipt No</td>
-                        <td>IR Create Date</td>
-                        <td>IR Created By</td>
-                        <td>IR Payment Date</td>
-                        <td>IR Net Amount</td>
-                        <td>PVR Number</td>
-                        <td>PVR Create Date</td>
-                        <td>PVR Created By</td>
-                        <td>PVR Amount Paid</td>
-                        <td>PVR Deducted PPh</td>
-                        <td>PVR Net Amount Paid</td>
-                        <td>PVR Approved Date</td>
-                        <td>PVR Approved By</td>
-                        <td>PVR Remarks</td>
-                        <td>PV Number</td>
-                        <td>PV Create Date</td>
-                        <td>PV Created By</td>
-                        <td>PV Amount Paid</td>
-                        <td>PV Bank Name</td>
-                        <td>PV Remarks</td>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     </div>
@@ -98,8 +54,14 @@
                 processing: true,
                 ajax: {
                     url: "{{ url('/') }}" + '/main-datatable',
+                    data: function(d) {
+                        d.filters = {
+                            po_date_start: $('#filter-po-date-start').val(),
+                            po_date_end: $('#filter-po-date-end').val(),
+                        };
+                    }
                 },
-                order: [[1, 'desc']],
+                ordering: false,
                 stateSave: false,
                 pageLength: 100,
                 lengthMenu: [ [100, -1], [100, "All"] ],
@@ -124,73 +86,123 @@
                             }
                         }
                     },
-                    {data: 'PONumber'},
-                    {data: 'POCreatedDate'},
-                    {data: 'POCreatedBy'},
-                    {data: 'POApprovedDate'},
-                    {data: 'POApprovedBy'},
-                    {data: 'POSupplierCode'},
-                    {data: 'POSupplierName'},
-                    {data: 'SupBank'},
-                    {data: 'SupAccountNo'},
-                    {data: 'SupAccountName'},
-                    {data: 'GRNumber'},
-                    {data: 'GRCreateDate'},
-                    {data: 'GRCreatedBy'},
-                    {data: 'GRReferenceNo'},
-                    {data: 'IRReceiptNo'},
-                    {data: 'IRCreateDate'},
-                    {data: 'IRCreatedBy'},
-                    {data: 'IRPaymentDate'},
-                    {data: 'IRNetAmount'},
-                    {data: 'PVRNumber'},
-                    {data: 'PVRCreateDate'},
-                    {data: 'PVRCreatedBy'},
-                    {data: 'PVRAmountPaid'},
-                    {data: 'PVRDeductedPPh'},
-                    {data: 'PVRNetAmountPaid'},
-                    {data: 'PVRApprovedDate'},
-                    {data: 'PVRApprovedBy'},
-                    {data: 'PVRRemarks'},
-                    {data: 'PVNumber'},
-                    {data: 'PVCreateDate'},
-                    {data: 'PVCreatedBy'},
-                    {data: 'PVAmountPaid'},
-                    {data: 'PVBankName'},
-                    {data: 'PVRemarks'},
+                    {
+                        data: 'PONumber',
+                        render: (data, _, row) => {
+                            return `
+                                PO Number: ${row.PONumber}<br>
+                                PO Create Date: ${moment(row.POCreateDate).format('DD/MM/YYYY HH:mm')}<br>
+                                PO Created By: ${row.POCreatedBy}<br>
+                                PO Approved Date: ${moment(row.POApprovedDate).format('DD/MM/YYYY HH:mm')}<br>
+                                PO Approved By: ${row.POApprovedBy}<br>
+                                PO Supplier Code: ${row.POSupplierCode}<br>
+                                PO Supplier Name: ${row.POSupplierName}<br>
+                                PO Amount: ${Rupiah.format(row.POAmount)}
+                            `;
+                        }
+                    },
+                    {
+                        data: 'SupBank',
+                        render: (data, _, row) => {
+                            return `
+                                Supplier Bank: ${row.SupBank}<br>
+                                Supplier Account No: ${row.SupAccountNo}<br>
+                                Supplier Account Name: ${row.SupAccountName}
+                            `;
+                        }
+                    },
+                    {
+                        data: 'GRNumber',
+                        render: (data, _, row) => {
+                            if (!row.GRNumber) {
+                                return '-';
+                            }
+                            return `
+                                PI Number: ${row.GRNumber}<br>
+                                PI Created Date: ${moment(row.GRCreateDate).format('DD/MM/YYYY HH:mm')}<br>
+                                PI Reference No: ${row.GRReferenceNo}<br>
+                                PI Amount: ${Rupiah.format(row.GRAmount)}
+                            `;
+                        }
+                    },
+                    {
+                        data: 'IRReceiptNo',
+                        render: (data, _, row) => {
+                            if (!row.IRReceiptNo) {
+                                return '-';
+                            }
+                            return `
+                                IR Number: ${row.IRReceiptNo}<br>
+                                IR Create Date: ${moment(row.IRCreateDate).format('DD/MM/YYYY HH:mm')}<br>
+                                IR Payment Date: ${moment(row.IRPaymentDate).format('DD/MM/YYYY HH:mm')}<br>
+                                IR Net Amount: ${Rupiah.format(row.IRNetAmount)}<br>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'PVRNumber',
+                        render: (data, _, row) => {
+                            if (!row.PVRNumber) {
+                                return '-';
+                            }
+                            return `
+                                PVR Number: ${row.PVRNumber}<br>
+                                PVR Created Date: ${moment(row.PVRCreateDate).format('DD/MM/YYYY HH:mm')}<br>
+                                PVR Created By: ${row.PVRCreatedBy}<br>
+                                PVR Amount Paid: ${Rupiah.format(row.PVRAmountPaid)}<br>
+                                PVR Deducted PPh: ${Rupiah.format(row.PVRDeductedPPh)}<br>
+                                PVR Net Amount Paid: ${Rupiah.format(row.PVRNetAmountPaid)}<br>
+                                PVR Approved Date: ${moment(row.PVRApprovedDate).format('DD/MM/YYYY HH:mm')}<br>
+                                PVR Approved By: ${row.PVRApprovedBy}<br>
+                                PVR Remarks: ${row.PVRRemarks}
+                            `;
+                        }
+                    },
+                    {
+                        data: 'PVNumber',
+                        render: (data, _, row) => {
+                            if (!row.PVNumber) {
+                                return '-';
+                            }
+                            return `
+                                PV Number: ${row.PVNumber}<br>
+                                PV Created Date: ${moment(row.PVRCreateDate).format('DD/MM/YYYY HH:mm')}<br>
+                                PV Created By: ${row.PVCreatedBy}<br>
+                                PV Amount Paid: ${Rupiah.format(row.PVAmountPaid)}<br>
+                                PV Bank Name: ${row.PVBankName}<br>
+                                PV Remarks: ${row.PVRemarks}
+                            `;
+                        }
+                    },
                 ],
                 scrollCollapse: true,
                 scrollX: true,
                 scrollY: 400,
                 initComplete: function () {
-                    this.api()
-                        .columns()
-                        .every(function () {
-                            let column = this;
-                            let title = column.footer().textContent;
+                    // this.api()
+                    //     .columns()
+                    //     .every(function () {
+                    //         let column = this;
+                    //         let title = column.footer().textContent;
             
-                            // Create input element
-                            let input = document.createElement('input');
-                            input.placeholder = title;
-                            input.classList.add('form-control');
-                            column.footer().replaceChildren(input);
+                    //         // Create input element
+                    //         let input = document.createElement('input');
+                    //         input.placeholder = title;
+                    //         input.classList.add('form-control');
+                    //         column.footer().replaceChildren(input);
             
-                            // Event listener for user input
-                            input.addEventListener('keyup', () => {
-                                if (column.search() !== this.value) {
-                                    column.search(input.value).draw();
-                                }
-                            });
-                        });
+                    //         // Event listener for user input
+                    //         input.addEventListener('keyup', () => {
+                    //             if (column.search() !== this.value) {
+                    //                 column.search(input.value).draw();
+                    //             }
+                    //         });
+                    //     });
                 },
                 dom: `
-                    <'row'
-                        <'col-auto flex-grow-1'
-                            <'row'
-                                <'col-auto'l>
-                                <'col-auto ml-5'f>
-                            >
-                        >
+                    <'row justify-content-between'
+                        <'col-auto'l>
+                        <'col-auto'f>
                         <'col-auto'B>
                     >
                     <'row'
@@ -204,7 +216,7 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        text: 'Export Excel',
+                        text: 'Export All',
                         className: 'btn btn-primary',
                         action: function () {
                             window.location.href = baseURL + '/main-export';
@@ -212,6 +224,8 @@
                     },
                 ],
             });
+
+            $('#btn-filter').click(() => {table.ajax.reload()});
         });
     </script>
 @endsection
