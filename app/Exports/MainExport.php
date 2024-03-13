@@ -17,6 +17,45 @@ class MainExport implements FromCollection, WithHeadings
     public function collection()
     {
         $query = DB::connection('sqlsrv')->table('dbo.VIEW_CUSTOM_FINANCE_REPORT_1')
+            ->select(
+                'PONumber',
+                'POCreateDate',
+                'POCreatedBy',
+                'POApprovedDate',
+                'POApprovedBy',
+                'PORemarks',
+                'POAmount',
+                'POSupplierCode',
+                'POSupplierName',
+                'SupBank',
+                'SupAccountNo',
+                'SupAccountName',
+                'GRNumber',
+                'GRCreateDate',
+                'GRCreatedBy',
+                'GRReferenceNo',
+                'GRAmount',
+                'IRReceiptNo',
+                'IRCreateDate',
+                'IRCreatedBy',
+                'IRPaymentDate',
+                'IRNetAmount',
+                'PVRNumber',
+                'PVRCreateDate',
+                'PVRCreatedBy',
+                'PVRAmountPaid',
+                'PVRDeductedPPh',
+                'PVRNetAmountPaid',
+                'PVRApprovedDate',
+                'PVRApprovedBy',
+                'PVRRemarks',
+                'PVNumber',
+                'PVCreateDate',
+                'PVCreatedBy',
+                'PVAmountPaid',
+                'PVBankName',
+                'PVRemarks'
+            )
             ->where('POApprovedBy', '=', 'handara.utomo');
 
         return $query->get();
@@ -30,6 +69,8 @@ class MainExport implements FromCollection, WithHeadings
             'PO Created By',
             'PO Approved Date',
             'PO Approved By',
+            'PO Remarks',
+            'PO Amount',
             'PO Supplier Code',
             'PO Supplier Name',
             'Sup Bank',
@@ -39,6 +80,7 @@ class MainExport implements FromCollection, WithHeadings
             'GR Create Date',
             'GR Created By',
             'GR Reference No',
+            'GR Amount',
             'IR Receipt No',
             'IR Create Date',
             'IR Created By',

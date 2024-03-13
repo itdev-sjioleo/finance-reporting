@@ -5,6 +5,17 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div><strong>PO Amount</strong> <div id="po_amount">-</div></div>
+                <div><strong>GR Amount</strong> <div id="gr_amount">-</div></div>
+                <div><strong>IR Amount</strong> <div id="ir_amount">-</div></div>
+                <div><strong>PVR Amount</strong> <div id="pvr_amount">-</div></div>
+                <div><strong>PV Amount</strong> <div id="pv_amount">-</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
             <div class="d-flex flex-row align-items-end" style="gap: 2rem">
                 <div>
                     <p class="font-weight-bold">Tanggal PO</p>
@@ -48,8 +59,15 @@
 
 @section('scripts')
     <script>
+        let table = null;
+        let masterPOAmount = 0;
+        let masterGRAmount = 0;
+        let masterIRAmount = 0;
+        let masterPVRAmount = 0;
+        let masterPVAmount = 0;
+
         $(document).ready(function() {
-            const table = $('#table-main').DataTable({
+            table = $('#table-main').DataTable({
                 serverSide: true,
                 processing: true,
                 ajax: {
@@ -68,22 +86,31 @@
                 columns: [
                     {
                         data: 'ItemType',
-                        render: (data) => {
+                        render: (data, _, row) => {
+                            let beginDate = row.POCreateDate;
+                            let endDate = moment();
+                            let html = '';
+
                             if (data == '#.#.#.#') {
-                                return 'Belum GRN';
+                                html += '<p>Belum GRN</p>';
                             }
                             if (data == 'PO.#.#.#') {
-                                return 'Belum IR';
+                                html += '<p>Belum IR</p>';
                             }
                             if (data == 'PO.PI.#.#') {
-                                return 'Belum PVR';
+                                html += '<p>Belum PVR</p>';
                             }
                             if (data == 'PO.PI.APR.#') {
-                                return 'Belum PV';
+                                html += '<p>Belum PV</p>';
                             }
                             if (data == 'PO.PI.APR.APR') {
-                                return 'Sudah PV';
+                                endDate = row.PVRCreateDate;
+                                html += '<p>Sudah PV</p>';
                             }
+
+                            html += `<p>${Math.floor(moment(endDate).diff(moment(beginDate)) / 86400000)} Hari</p>`;
+
+                            return html;
                         }
                     },
                     {
@@ -177,7 +204,7 @@
                 ],
                 scrollCollapse: true,
                 scrollX: true,
-                scrollY: 400,
+                scrollY: 600,
                 initComplete: function () {
                     // this.api()
                     //     .columns()
@@ -198,6 +225,16 @@
                     //             }
                     //         });
                     //     });
+                },
+                drawCallback: function() {
+                    this.api().rows().every(function(rowIdx, tableLoop, rowLoop) {
+                        masterPOAmount += parseFloat(this.data().POAmount ?? 0);
+                        masterGRAmount += parseFloat(this.data().GRAmount ?? 0);
+                        masterIRAmount += parseFloat(this.data().IRNetAmount ?? 0);
+                        masterPVRAmount += parseFloat(this.data().PVRNetAmountPaid ?? 0);
+                        masterPVAmount += parseFloat(this.data().PVAmountPaid ?? 0);
+                    });
+                    refreshGrandTotal();
                 },
                 dom: `
                     <'row justify-content-between'
@@ -227,5 +264,13 @@
 
             $('#btn-filter').click(() => {table.ajax.reload()});
         });
+
+        function refreshGrandTotal() {
+            $('#po_amount').text(Rupiah.format(masterPOAmount));
+            $('#gr_amount').text(Rupiah.format(masterGRAmount));
+            $('#ir_amount').text(Rupiah.format(masterIRAmount));
+            $('#pvr_amount').text(Rupiah.format(masterPVRAmount));
+            $('#pv_amount').text(Rupiah.format(masterPVAmount));
+        }
     </script>
 @endsection
