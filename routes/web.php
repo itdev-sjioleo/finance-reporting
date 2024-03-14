@@ -22,20 +22,14 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('main', 'App\Http\Controllers\MainController@index');
     Route::get('main-datatable', 'App\Http\Controllers\MainController@datatable');
     Route::get('main-export', 'App\Http\Controllers\MainController@export');
+
+    Route::get('/main-test', 'App\Http\Controllers\MainController@test');
 });
 
 Auth::routes();
 
 Route::get('test-reset-password', function() {
     return view('emails.reset-password');
-});
-
-Route::get('/test', function() {
-    $data = App\Models\PurchaseOrder::with('PurchaseOrderItem')
-        ->where('PONumber', 'SJIO/HO/PO/2303/001')
-        ->first()
-        ->toArray();
-    dd($data);
 });
 
 

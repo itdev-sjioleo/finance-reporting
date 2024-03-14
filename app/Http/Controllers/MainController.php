@@ -8,12 +8,20 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Services\DataTable;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MainExport;
+use App\Models\PurchaseOrder;
 
 class MainController extends Controller
 {
     public function index()
     {
         return view('main');
+    }
+
+    public function test()
+    {
+        $purchase_order = PurchaseOrder::where('PONumber', 'SJIO/HO/PO/2401/011')->first();
+
+        return view('test', compact('purchase_order'));
     }
 
     public function datatable(Request $request)
