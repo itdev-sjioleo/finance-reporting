@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | IT Inventory</title>
+    <title>Login | Finance Tracking</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ url('public/plugins/fontawesome-free/css/all.min.css') }}">
@@ -19,7 +19,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <h1 class="mb-0"><b>IT Inventory</b></h1>
+                <h1 class="mb-0"><b>Finance Tracking</b></h1>
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('login') }}">
