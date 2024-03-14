@@ -13,13 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\MainController@index');
-
 Route::get('/login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login');
 Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
+    Route::get('/', 'App\Http\Controllers\MainController@index');
     Route::get('main', 'App\Http\Controllers\MainController@index');
     Route::get('main-datatable', 'App\Http\Controllers\MainController@datatable');
     Route::get('main-export', 'App\Http\Controllers\MainController@export');
