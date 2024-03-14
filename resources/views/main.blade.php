@@ -79,7 +79,8 @@
                         };
                     }
                 },
-                ordering: false,
+                order: [[7, 'desc']],
+                // ordering: false,
                 stateSave: false,
                 pageLength: 100,
                 lengthMenu: [ [100, -1], [100, "All"] ],
@@ -201,6 +202,10 @@
                             `;
                         }
                     },
+                    {
+                        data: 'POCreateDate',
+                        visible: false,
+                    }
                 ],
                 scrollCollapse: true,
                 scrollX: true,

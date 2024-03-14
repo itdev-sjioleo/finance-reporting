@@ -31,4 +31,12 @@ Route::get('test-reset-password', function() {
     return view('emails.reset-password');
 });
 
+Route::get('/test', function() {
+    $data = App\Models\PurchaseOrder::with('PurchaseOrderItem')
+        ->where('PONumber', 'SJIO/HO/PO/2303/001')
+        ->first()
+        ->toArray();
+    dd($data);
+});
+
 
