@@ -232,6 +232,12 @@
                     //     });
                 },
                 drawCallback: function() {
+                    masterPOAmount = 0;
+                    masterGRAmount = 0;
+                    masterIRAmount = 0;
+                    masterPVRAmount = 0;
+                    masterPVAmount = 0;
+
                     this.api().rows().every(function(rowIdx, tableLoop, rowLoop) {
                         masterPOAmount += parseFloat(this.data().POAmount ?? 0);
                         masterGRAmount += parseFloat(this.data().GRAmount ?? 0);
@@ -239,6 +245,7 @@
                         masterPVRAmount += parseFloat(this.data().PVRNetAmountPaid ?? 0);
                         masterPVAmount += parseFloat(this.data().PVAmountPaid ?? 0);
                     });
+                    
                     refreshGrandTotal();
                 },
                 dom: `
