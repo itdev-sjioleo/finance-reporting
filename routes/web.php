@@ -30,12 +30,9 @@ Route::get('test-reset-password', function() {
     return view('emails.reset-password');
 });
 
-Route::get('/test', function() {
-    $data = App\Models\PurchaseOrder::with('PurchaseOrderItem')
-        ->where('PONumber', 'SJIO/HO/PO/2303/001')
-        ->first()
-        ->toArray();
-    dd($data);
-});
+Route::get('test', 'App\Http\Controllers\TestController@index');
+Route::post('sim', 'App\Http\Controllers\TestController@sim');
+Route::get('testexcel', 'App\Http\Controllers\TestController@testexcel');
 
-
+Route::get('test2', 'App\Http\Controllers\Test2Controller@index');
+Route::post('sim2', 'App\Http\Controllers\Test2Controller@sim');

@@ -93,6 +93,21 @@ return [
             'trust_server_certificate' => 'true',
         ],
 
+        'sqlsrv2' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' => '154.26.137.122',
+            'port' => '21433',
+            'database' => 'AS_SHARED_SJIO_REF',
+            'username' => 'sa',
+            'password' => 'Sjio.2023#',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'encrypt' => 'yes',
+            'trust_server_certificate' => 'true',
+        ],
+
     ],
 
     /*
